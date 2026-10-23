@@ -1,0 +1,25 @@
+{
+  "child": "甲骨文云免费解析",
+  "parent": "甲骨云",
+  "parts": [
+    "语言指令",
+    "上级 L1: 甲骨云"
+  ],
+  "chars": 3722,
+  "socratic": true,
+  "exportDir": "D:\\ai\\spider-new\\data\\exports\\飞牛公网访问方案",
+  "exportFiles": [
+    "index.md",
+    "brief.md",
+    "notes.md",
+    "nodes/飞牛公网访问方案-27beb5.md",
+    "nodes/甲骨云-131a8e.md",
+    "nodes/test-efb1dd.md",
+    "nodes/甲骨文云免费解析-ce1cbf.md",
+    "nodes/未命名问题-2cd818.md",
+    "nodes/未命名问题-9ea677.md",
+    "map.canvas",
+    "map.svg",
+    "map.json"
+  ]
+}

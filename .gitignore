@@ -1,0 +1,18 @@
+# build & deps
+node_modules/
+dist/
+src-tauri/target/
+src-tauri/binaries/
+
+# local data (maps, settings, logs, exports) — never publish
+data/
+.env
+.env.*
+*.log
+
+# agent scratch / local backups
+.ulw-*/
+*.bak
+*.bak-ulw
+docs/*ULW_NOTEPAD*
+*.local

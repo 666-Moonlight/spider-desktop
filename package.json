@@ -1,0 +1,39 @@
+{
+  "name": "spider-standalone",
+  "private": false,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev:server": "bun run --hot src/server/index.ts",
+    "launch": "bun run build && bun run src/server/index.ts",
+    "build": "vite build",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check src tests",
+    "test": "bun test",
+    "sidecar": "bun build --compile --minify --target=bun-windows-x64 src/server/index.ts --outfile src-tauri/binaries/spider-server-x86_64-pc-windows-msvc.exe",
+    "app:build": "bun run sidecar && bun run build && tauri build",
+    "app:dev": "bun run sidecar && tauri dev"
+  },
+  "dependencies": {
+    "@dagrejs/dagre": "^1.1.4",
+    "@xyflow/react": "^12.3.6",
+    "hono": "^4.6.14",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "zod": "^4.0.0",
+    "zustand": "^5.0.2"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.0.6",
+    "@tauri-apps/cli": "^2.12.4",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "bun-types": "latest",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.7"
+  },
+  "license": "MIT",
+  "description": "Local-first branch-chat knowledge map desktop app (independent build of the Spider Obsidian plugin)"
+}

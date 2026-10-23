@@ -1,0 +1,11 @@
+bundle=index-C0c90-4K.js
+zoom=0.55
+S1 drag start: node=[380,0] zoom=0.55
+S1 step pointer(+20,+10) flowDelta=[36.36,18.18] expected=[36.36,18.18] PASS
+S1 step pointer(+50,+25) flowDelta=[90.91,45.45] expected=[90.91,45.45] PASS
+S1 step pointer(+90,+45) flowDelta=[163.64,81.82] expected=[163.64,81.82] PASS
+S1 step pointer(+130,+65) flowDelta=[236.36,118.18] expected=[236.36,118.18] PASS
+S1 RESULT=PASS
+S2 no jump on release: before=translate(616.364px, 118.182px) after=translate(616.364px, 118.182px) PASS
+S2 saved JSON position={"x":616.3636363636363,"y":118.18181818181817} rendered=[616.364,118.182] PASS
+S2 reload position=[616.364,118.182] PASS

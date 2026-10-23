@@ -1,0 +1,12 @@
+{
+  "apiBaseUrl": "http://127.0.0.1:8000/v1",
+  "apiKey": "your-api-key",
+  "model": "your-model-name",
+  "embeddingsModel": "",
+  "language": "zh-CN",
+  "includeParentContext": true,
+  "teachingStyle": "default",
+  "customSystemPrompt": "",
+  "toolsEnabled": true,
+  "mcpServers": []
+}
