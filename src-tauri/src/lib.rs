@@ -8,6 +8,13 @@ use tauri_plugin_shell::ShellExt;
 
 const SERVER_PORT: u16 = 4319;
 
+fn env_port() -> u16 {
+    std::env::var("SPIDER_PORT")
+        .ok()
+        .and_then(|raw| raw.trim().parse().ok())
+        .unwrap_or(SERVER_PORT)
+}
+
 #[derive(Default)]
 struct ServerHandle(Mutex<Option<CommandChild>>);
 
@@ -63,21 +70,29 @@ pub fn run() {
                 .into_iter()
                 .find(|dir| dir.join("index.html").exists())
                 .ok_or("dist/index.html not found next to the executable or in resources")?;
-            let data_dir = app
-                .path()
-                .app_data_dir()
-                .map_err(|err| format!("app_data_dir unavailable: {err}"))?;
+            let data_dir = match std::env::var("SPIDER_DATA_DIR") {
+                Ok(raw) if !raw.trim().is_empty() => std::path::PathBuf::from(raw),
+                _ => app
+                    .path()
+                    .app_data_dir()
+                    .map_err(|err| format!("app_data_dir unavailable: {err}"))?,
+            };
             std::fs::create_dir_all(&data_dir)?;
-            let seed = resource_dir.join("seed").join("settings.json");
+            let seed = [resource_dir.join("seed").join("settings.json"), exe_dir.join("seed").join("settings.json")]
+                .into_iter()
+                .find(|path| path.exists());
             let target = data_dir.join("settings.json");
-            if seed.exists() && !target.exists() {
-                let _ = std::fs::copy(&seed, &target);
+            if let Some(seed) = seed {
+                if !target.exists() {
+                    let _ = std::fs::copy(&seed, &target);
+                }
             }
+            let port = env_port();
             let sidecar = app
                 .shell()
                 .sidecar("spider-server")
                 .map_err(|err| format!("sidecar not found: {err}"))?
-                .env("SPIDER_PORT", SERVER_PORT.to_string())
+                .env("SPIDER_PORT", port.to_string())
                 .env("SPIDER_STATIC_DIR", plain_path(static_dir))
                 .env("SPIDER_DATA_DIR", plain_path(data_dir.clone()));
 
@@ -100,11 +115,11 @@ pub fn run() {
                 }
             });
 
-            if !wait_for_port(SERVER_PORT, Duration::from_secs(40)) {
+            if !wait_for_port(port, Duration::from_secs(40)) {
                 return Err("local server did not become ready in 40s".into());
             }
 
-            let url = format!("http://127.0.0.1:{SERVER_PORT}/");
+            let url = format!("http://127.0.0.1:{port}/");
             WebviewWindowBuilder::new(app, "main", WebviewUrl::External(url.parse()?))
                 .title("Spider 独立版")
                 .inner_size(1280.0, 860.0)

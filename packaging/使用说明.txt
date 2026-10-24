@@ -1,0 +1,51 @@
+# Spider Standalone v0.1.0 — 免安装绿色版
+
+Windows 64 位免安装版。**解压即用**：把整个 `Spider-0.1.0-portable-x64` 文件夹复制到任意位置（路径含中文也没问题），双击 `Spider.exe` 即可。
+
+## 目录内容
+
+```
+Spider-0.1.0-portable-x64/
+├─ Spider.exe            ← 双击这个启动
+├─ spider-server.exe     ← 后端 sidecar，由 Spider.exe 自动拉起，不需要手动运行
+├─ dist/                 ← 前端资源
+├─ seed/settings.json    ← 首次启动时的默认设置模板
+└─ 使用说明.txt
+```
+
+## 首次使用
+
+1. 双击 `Spider.exe`，程序会自动启动本地服务（127.0.0.1:4319）并打开窗口。
+2. 右上角「设置」→ 填 **API Base URL / Key / 模型**。任何 OpenAI 兼容端点都行：
+   - 本地 Ollama：`http://127.0.0.1:11434/v1`
+   - 其他云端 API / 自建网关
+3. 之后在侧栏「新建」建图谱，或「导入」把 Obsidian 里的 `.spider/maps` 目录导进来。
+
+## 数据存在哪
+
+本程序是绿色版，但**数据不会写在程序目录里**，而是遵循 Windows 规范放在：
+
+```
+%APPDATA%\com.spider.standalone\data\
+```
+
+也就是说：把程序文件夹随便挪走、删了重下，你的图谱和设置都不会丢。想备份就备份上面这个目录。
+
+如果想改成「数据跟程序放一起」以便塞进 U 盘，或本机 4319 端口被占用，可以在 `Spider.exe` 的快捷方式里加环境变量：
+
+| 变量 | 作用 | 默认值 |
+|---|---|---|
+| `SPIDER_DATA_DIR` | 数据目录 | `%APPDATA%\com.spider.standalone\data` |
+| `SPIDER_PORT` | 本地服务端口 | `4319` |
+
+## 卸载
+
+直接删除 `Spider-0.1.0-portable-x64` 文件夹即可。想彻底清除痕迹，再删掉 `%APPDATA%\com.spider.standalone` 目录。
+
+## 已验证环境
+
+Windows 10 / 11 64 位。需要 WebView2 运行时（Win11 自带；Win10 若缺失请到微软官网下载 Evergreen Runtime）。
+
+## 来源与许可
+
+本项目基于 Obsidian 插件 [Spider](https://github.com/111pointer111/spider)（作者 huangtao）以 MIT 许可独立重构，非原作者官方版本。详见仓库内 `LICENSE` 与 `NOTICE`。
